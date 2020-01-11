@@ -55,11 +55,11 @@ export { build };
 
 After having installed `@fang/cli`, add this script to your `package.json`.
 
-```javascript
+```json
 {
-	"scripts": {
-		"build": "fang build"
-	}
+  "scripts": {
+    "build": "fang build"
+  }
 }
 ```
 
