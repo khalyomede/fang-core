@@ -1,0 +1,32 @@
+{
+	"name": "@fang/core",
+	"version": "0.1.0",
+	"description": "Task runner for Node.JS",
+	"main": "lib/index.js",
+	"repository": "https://github.com/khalyomede/fang-core",
+	"author": "Khalyomede <khalyomede@gmail.com>",
+	"license": "MIT",
+	"private": false,
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "11.*",
+		"@rollup/plugin-node-resolve": "7.*",
+		"@rollup/plugin-typescript": "2.*",
+		"@types/node": "13.*",
+		"chai": "4.*",
+		"mocha": "7.*",
+		"np": "5.*",
+		"npm-check-updates": "4.*",
+		"rollup": "1.*",
+		"tslib": "1.*",
+		"typescript": "3.*",
+		"util": "0.*"
+	},
+	"keywords": [
+		"task runner",
+		"parallel"
+	],
+	"scripts": {
+		"build": "ncu && rollup -c",
+		"release": "np"
+	}
+}
