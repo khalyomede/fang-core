@@ -24,7 +24,7 @@ With Fang, each "tasks" is meant to be run in a CPU core. Which means you can le
 
 ## Examples
 
-- [1. Transpile PUG files](#transpile-pug-files)
+- [1. Transpile PUG files](#1-transpile-pug-files)
 
 ### 1. Transpile PUG files
 
