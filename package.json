@@ -31,8 +31,7 @@
 	"scripts": {
 		"build": "ncu && rollup -c && tsc --emitDeclarationOnly --declarationDir lib",
 		"test": "nyc --reporter=text --reporter=lcov mocha --require @babel/register test",
-		"release": "np",
-		"gulp": "gulp"
+		"release": "np"
 	},
 	"dependencies": {
 		"glob": "7.*",
