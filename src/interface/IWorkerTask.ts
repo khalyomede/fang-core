@@ -1,6 +1,6 @@
 interface IWorkerTask {
 	name: string;
-	inputFilePath: string;
+	input: string;
 	tasks: Array<Function>;
 	outputDir: string;
 	taskIndex: number;

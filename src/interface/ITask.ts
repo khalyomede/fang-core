@@ -1,6 +1,6 @@
 interface ITask {
 	name: string;
-	inputFilePath: string;
+	input: string;
 	tasks: Array<Function>;
 }
 

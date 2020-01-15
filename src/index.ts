@@ -1,13 +1,44 @@
-import { ITask, IWorkerTask } from "./interface";
+import { ITask, IWorkerTask, IFile } from "./interface";
 import { cpus } from "os";
 import { fork, isMaster, isWorker, on } from "cluster";
 import { promisify } from "util";
-import { readFile, writeFile, mkdir } from "fs";
-import { basename } from "path";
+import { readFile, exists } from "fs";
+import { dirname } from "path";
+import glob from "glob";
 
 const asyncReadFile = promisify(readFile);
-const asyncWriteFile = promisify(writeFile);
-const asyncMkdir = promisify(mkdir);
+const asyncGlob = promisify(glob);
+const asyncExists = promisify(exists);
+
+const getBaseDirectory = async (filePath: string) => {
+	const subDirectoryLookup = /(.*)\*\*\//;
+
+	if (subDirectoryLookup.test(filePath)) {
+		const matches = filePath.match(subDirectoryLookup);
+
+		if (matches === null) {
+			throw new Error(
+				`unable to get the directory before your subdirectory lookup (**/), if you are using **/, you should add a directory before`
+			);
+		}
+
+		if (matches.length < 2) {
+			throw new Error(
+				`unable to catch the directory before your sub directory lookup (**/)`
+			);
+		}
+
+		return matches[1];
+	} else {
+		const exists = await asyncExists(filePath);
+
+		if (!exists) {
+			throw new Error("the file does not exists");
+		}
+
+		return dirname(filePath);
+	}
+};
 
 const run = async (tasks: Array<ITask>) => {
 	if (isMaster) {
@@ -15,28 +46,46 @@ const run = async (tasks: Array<ITask>) => {
 		console.log("fang: start");
 
 		const numberOfCpus = cpus().length;
-		let remainingTaskCount = tasks.length;
+		const numberOfTasks = tasks.length;
+		const numberOfUsedCpus = numberOfCpus;
+		const numberOfTasksToRunOnTheFirstRun =
+			numberOfTasks > numberOfUsedCpus ? numberOfUsedCpus : numberOfTasks;
+		let numberOfRemainingTasks = tasks.length;
+		let taskIndex = 0;
 
 		console.log(`${numberOfCpus} CPUs core(s)`);
-		console.log(`${remainingTaskCount} tasks to run`);
+		console.log(`${numberOfTasks} tasks to run`);
 
-		for (let taskIndex = 0; taskIndex < tasks.length; taskIndex++) {
+		for (let index = 0; index < numberOfTasksToRunOnTheFirstRun; index++) {
 			const task = tasks[taskIndex];
 			const worker = fork();
 
 			worker.send({
 				...task,
-				taskIndex: taskIndex,
+				taskIndex,
 			});
+
+			taskIndex++;
 		}
 
-		on("exit", () => {
-			remainingTaskCount--;
+		on("message", worker => {
+			numberOfRemainingTasks--;
 
-			if (remainingTaskCount === 0) {
+			if (numberOfRemainingTasks < 1) {
 				console.timeEnd("fang");
 
 				process.exit(0);
+			} else {
+				const task = tasks[taskIndex];
+
+				if (typeof task !== "undefined") {
+					worker.send({
+						...task,
+						taskIndex,
+					});
+
+					taskIndex++;
+				}
 			}
 		});
 	} else if (isWorker) {
@@ -44,24 +93,34 @@ const run = async (tasks: Array<ITask>) => {
 			console.time(workerTask.name);
 			console.log(`${workerTask.name}: start`);
 
-			let content = await asyncReadFile(workerTask.inputFilePath);
+			const baseDirectory = await getBaseDirectory(workerTask.input);
+			const baseFilePaths = await asyncGlob(workerTask.input);
+
+			let files: Array<IFile> = [];
+
+			for (const baseFilePath of baseFilePaths) {
+				const content = await asyncReadFile(baseFilePath);
+				const relativeFilePath = baseFilePath.replace(
+					baseDirectory,
+					""
+				);
+
+				files.push({
+					path: relativeFilePath,
+					content: content,
+				});
+			}
+
 			const taskList = tasks[workerTask.taskIndex].tasks;
 
 			for (const task of taskList) {
-				content = await task(content);
+				files = await task(files);
 			}
-
-			await asyncMkdir(workerTask.outputDir, {
-				recursive: true,
-			});
-			await asyncWriteFile(
-				`${workerTask.outputDir}/${basename(workerTask.inputFilePath)}`,
-				content
-			);
 
 			console.timeEnd(workerTask.name);
 
-			process.exit(0);
+			// @ts-ignore
+			process.send("finished");
 		});
 	}
 };

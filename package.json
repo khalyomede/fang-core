@@ -8,6 +8,9 @@
 	"license": "MIT",
 	"private": false,
 	"devDependencies": {
+		"@babel/core": "7.*",
+		"@babel/preset-env": "7.*",
+		"@babel/register": "7.*",
 		"@rollup/plugin-commonjs": "11.*",
 		"@rollup/plugin-node-resolve": "7.*",
 		"@rollup/plugin-typescript": "2.*",
@@ -16,17 +19,31 @@
 		"mocha": "7.*",
 		"np": "5.*",
 		"npm-check-updates": "4.*",
+		"nyc": "15.*",
 		"rollup": "1.*",
 		"tslib": "1.*",
-		"typescript": "3.*",
-		"util": "0.*"
+		"typescript": "3.*"
 	},
 	"keywords": [
 		"task runner",
 		"parallel"
 	],
 	"scripts": {
-		"build": "ncu && rollup -c",
-		"release": "np"
-	}
+		"build": "ncu && rollup -c && tsc --emitDeclarationOnly --declarationDir lib",
+		"test": "nyc --reporter=text --reporter=lcov mocha --require @babel/register test",
+		"release": "np",
+		"gulp": "gulp"
+	},
+	"dependencies": {
+		"glob": "7.*",
+		"util": "0.*"
+	},
+	"files": [
+		"lib/index.d.ts",
+		"lib/index.js",
+		"lib/interface/IFile.d.ts",
+		"lib/interface/index.d.ts",
+		"lib/interface/ITask.d.ts",
+		"lib/interface/IWorkerTask.d.ts"
+	]
 }

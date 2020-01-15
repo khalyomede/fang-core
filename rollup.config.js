@@ -11,6 +11,7 @@ export default {
 		commonjs(),
 		typescript(),
 	],
+	external: ["cluster", "os", "fs", "path", "glob", "util"],
 	output: {
 		file: "lib/index.js",
 		format: "cjs",
