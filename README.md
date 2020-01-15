@@ -9,6 +9,7 @@ Task runner for Node.JS
 - [Examples](#examples)
 - [Create your Fang plugin](#create-your-fang-plugin)
 - [API](#api)
+- [Credits](#credits)
 
 ## About
 
@@ -185,3 +186,7 @@ interface IFile {
 	content: Buffer:
 }
 ```
+
+## Credits
+
+Logo from an original icon by tulpahn from the Noun Project.
