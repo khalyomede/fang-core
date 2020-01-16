@@ -1,6 +1,6 @@
 {
 	"name": "@fang/core",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"description": "Task runner for Node.JS",
 	"main": "lib/index.js",
 	"repository": "https://github.com/khalyomede/fang-core",
