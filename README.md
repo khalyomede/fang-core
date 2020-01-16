@@ -2,7 +2,7 @@
 
 Task runner for Node.JS
 
-[![npm](https://img.shields.io/npm/v/@fang/core)](https://www.npmjs.com/package/@fang/core) [![NPM](https://img.shields.io/npm/l/@fang/core)](https://github.com/khalyomede/fang-core/blob/master/LICENSE) [![Maintainability](https://api.codeclimate.com/v1/badges/0bf7e947b52754320e4d/maintainability)](https://codeclimate.com/github/khalyomede/fang-core/maintainability) ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/@fang/core) [![Known Vulnerabilities](https://snyk.io/test/github/khalyomede/fang-core/badge.svg?targetFile=package.json)](https://snyk.io/test/github/khalyomede/fang-core?targetFile=package.json)
+[![npm](https://img.shields.io/npm/v/@fang/core)](https://www.npmjs.com/package/@fang/core) [![NPM](https://img.shields.io/npm/l/@fang/core)](https://github.com/khalyomede/fang-core/blob/master/LICENSE) [![Build Status](https://travis-ci.com/khalyomede/fang-core.svg?branch=master)](https://travis-ci.com/khalyomede/fang-core) [![codecov](https://codecov.io/gh/khalyomede/fang-core/branch/master/graph/badge.svg)](https://codecov.io/gh/khalyomede/fang-core) [![Maintainability](https://api.codeclimate.com/v1/badges/0bf7e947b52754320e4d/maintainability)](https://codeclimate.com/github/khalyomede/fang-core/maintainability) ![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/@fang/core) [![Known Vulnerabilities](https://snyk.io/test/github/khalyomede/fang-core/badge.svg?targetFile=package.json)](https://snyk.io/test/github/khalyomede/fang-core?targetFile=package.json)
 
 ## Summary
 
