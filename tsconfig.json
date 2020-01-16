@@ -6,6 +6,7 @@
 		"alwaysStrict": true,
 		"declaration": true,
 		"declarationDir": "lib",
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"downlevelIteration": true
 	}
 }

@@ -1,6 +1,6 @@
 import { ITask, IWorkerTask, IFile } from "./interface";
 import { cpus } from "os";
-import { fork, isMaster, isWorker, on } from "cluster";
+import { fork, isMaster, isWorker, on, worker } from "cluster";
 import { promisify } from "util";
 import { readFile, exists } from "fs";
 import { dirname } from "path";
@@ -42,6 +42,74 @@ const getBaseDirectory = async (filePath: string) => {
 
 const run = async (tasks: Array<ITask>) => {
 	if (isMaster) {
+		if (!Array.isArray(tasks)) {
+			throw new Error(`"tasks" must be an array`);
+		}
+
+		for (const [taskIndex, task] of tasks.entries()) {
+			if (!(task instanceof Object)) {
+				throw new TypeError(`"task[${taskIndex}]" must be an object`);
+			}
+
+			if (!("name" in task)) {
+				throw new Error(`"task[${taskIndex}].name" must be present`);
+			}
+
+			if (!("tasks" in task)) {
+				throw new Error(`"task[${taskIndex}].tasks" must be present`);
+			}
+
+			if (!("input" in task)) {
+				throw new Error(`"task[${taskIndex}].input" must be present`);
+			}
+
+			if (typeof task.name !== "string") {
+				throw new TypeError(
+					`"task[${taskIndex}].name" must be a string`
+				);
+			}
+
+			if (typeof task.input !== "string") {
+				throw new TypeError(
+					`"task[${taskIndex}].input" must be a string`
+				);
+			}
+
+			if (!Array.isArray(task.tasks)) {
+				throw new TypeError(
+					`"task[${taskIndex}].tasks" must be an array`
+				);
+			}
+
+			if (task.name.trim().length === 0) {
+				throw new Error(`"task[${taskIndex}].name" must be filled`);
+			}
+
+			if (task.input.trim().length === 0) {
+				throw new Error(`"task[${taskIndex}].input" must be filled`);
+			}
+
+			if (task.tasks.length === 0) {
+				throw new Error(`"task[${taskIndex}].tasks" must be filled`);
+			}
+
+			const inputExists = await asyncExists(task.input);
+
+			if (!inputExists) {
+				throw new Error(
+					`"task[${taskIndex}].input" must be an existing file`
+				);
+			}
+
+			for (const [callableIndex, callable] of task.tasks.entries()) {
+				if (!(callable instanceof Function)) {
+					throw new TypeError(
+						`"task[${taskIndex}].tasks[${callableIndex}]" must be a function`
+					);
+				}
+			}
+		}
+
 		console.time("fang");
 		console.log("fang: start");
 
