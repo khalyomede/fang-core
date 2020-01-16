@@ -39,6 +39,7 @@ const save = require("@fang/save");
 
 const robots = {
   name: "robots.txt",
+  input: "src/robots.txt",
   tasks: [
     save({
       folder: "dist",
