@@ -11,6 +11,7 @@ Task runner for Node.JS
 - [Examples](#examples)
 - [Create your Fang plugin](#create-your-fang-plugin)
 - [API](#api)
+- [Plugins list](#plugins-list)
 - [Changelog](CHANGELOG.md)
 - [Credits](#credits)
 
@@ -161,7 +162,9 @@ This is for the future, where this doc will be hosted in his own website, and I 
 
 That's it! Now others folks can use your package, your task, your plugin, ... whatever :)
 
-In the future, this section will contain a list of core plugins to help you get some inspirations.
+If you need some inspirations, you can browse the source codes of some of these simple plugins to start.
+
+- [@fang/save](https://github.com/khalyomede/fang-save)
 
 If you want to get started fast, or you don't want to mess around with installing the required package to transpile, build, test, ... you can clone the fang starter plugin to get started! All the doc is available at [https://github.com/khalyomede/fang-starter-plugin](https://github.com/khalyomede/fang-starter-plugin).
 
@@ -190,6 +193,10 @@ interface IFile {
 	content: Buffer:
 }
 ```
+
+## Plugins list
+
+- [@fang/save](https://npmjs.com/package/@fang/save): Save your files into the desired folder.
 
 ## Credits
 
