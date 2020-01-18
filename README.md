@@ -30,6 +30,7 @@ Runs tasks in parallel using all the available cores.
 ## Examples
 
 - [1. Run Fang using Node via a script.js](#1-run-fang-using-node-via-a-script-js)
+- [2. Create an inline plugin one time project tasks](#2-create-an-inline-plugin-for-one-time-project-tasks)
 
 ### 1. Run Fang using Node via a script.js
 
@@ -79,6 +80,40 @@ robots.txt: start
 robots.txt: 10.228ms
 fang: 1.223s
 ```
+
+### 2. Create an inline plugin one time project tasks
+
+When you do not find a plugin that suit your need, you can create a small one rapidly.
+
+```javascript
+const { run } = require("@fang/core");
+const save = require("@fang/save");
+const myPlugin = options => files => {
+  for (const [index, file] in files.entries()) {
+    files[index].content = "console.log('test');";
+    files[index].path = "whatever.js";
+  }
+
+  return files;
+};
+
+const js = {
+  name: "Javascript",
+  input: "src/js/index.js",
+  tasks: [
+    myPlugin(),
+    save({
+      folder: "dist/js",
+    }),
+  ],
+};
+
+const main = async () => await run([js]);
+
+main();
+```
+
+This plugin will change the content of each of the files, and put `console.log('test');` inside, and rename all the files to `whatever.js`.
 
 ## Create your Fang plugin
 
