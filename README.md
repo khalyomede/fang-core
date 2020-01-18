@@ -198,6 +198,7 @@ interface IFile {
 
 ## Plugins list
 
+- [@fang/rename](https://npmjs.com/package/@fang/rename): Rename your input files, change their extension, add suffixes, ... using rename.
 - [@fang/save](https://npmjs.com/package/@fang/save): Save your files into the desired folder.
 - [@fang/terser](https://npmjs.com/package/@fang/terser): Compress Javascript files using Terser.
 - [@fang/typescript](https://npmjs.com/package/@fang/typescript): Transpiles your Typescript files and generates declaration files.
