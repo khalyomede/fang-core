@@ -165,6 +165,7 @@ That's it! Now others folks can use your package, your task, your plugin, ... wh
 If you need some inspirations, you can browse the source codes of some of these simple plugins to start.
 
 - [@fang/save](https://github.com/khalyomede/fang-save)
+- [@fang/typescript](https://github.com/khalyomede/fang-typescript)
 
 If you want to get started fast, or you don't want to mess around with installing the required package to transpile, build, test, ... you can clone the fang starter plugin to get started! All the doc is available at [https://github.com/khalyomede/fang-starter-plugin](https://github.com/khalyomede/fang-starter-plugin).
 
@@ -197,6 +198,7 @@ interface IFile {
 ## Plugins list
 
 - [@fang/save](https://npmjs.com/package/@fang/save): Save your files into the desired folder.
+- [@fang/typescript](https://npmjs.com/package/@fang/typescript): Transpiles your Typescript files and generates declaration files.
 
 ## Credits
 
