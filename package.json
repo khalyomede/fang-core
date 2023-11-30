@@ -38,7 +38,7 @@
 		"coverage": "codecov"
 	},
 	"dependencies": {
-		"glob": "7.*",
+		"glob": "9.0.0",
 		"util": "0.*"
 	},
 	"files": [
